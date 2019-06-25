@@ -7,8 +7,8 @@ import redis
 import requests
 
 # telagram token
-telegram_token = "636697405:AAHWDGZrBg5Tx18JBA6efl-lz9z-TPu0doo"
-telegram_chat_id = "-256414724"
+telegram_token = "" # put your telegram token
+telegram_chat_id = "" # put your telegram chat id
 
 # parameters
 fx_map = {"uusd":"USDUSD","ukrw":"USDKRW","ueur":"USDEUR","ucny":"USDCNY","ujpy":"USDJPY","usdr":"USDSDR"}
