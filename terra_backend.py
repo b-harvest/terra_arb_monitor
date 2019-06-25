@@ -140,6 +140,8 @@ while True:
         if latest_block_height > last_height:
             p = Pool(4)
             res_fx, res_sdr, res_coinone, res_swap = p.map(get_data, ["get_fx_rate","get_sdr_rate","get_coinone_luna_price","get_swap_price"])
+            p.close()
+            p.join()
             fx_err_flag, real_fx = res_fx
             sdr_err_flag, sdr_rate = res_sdr
             coinone_err_flag, luna_price, luna_base, luna_midprice_krw = res_coinone
