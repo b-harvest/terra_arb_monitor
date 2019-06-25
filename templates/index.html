@@ -1,0 +1,62 @@
+<!-- ./templates/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="refresh" content="5">
+    <title>Terra Swap/Market Prices by B-Harvest</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+</head>
+<body>
+<section class="section">
+    <div class="container">
+        <font size=5>Luna Swap/Market Prices by B-Harvest</font><br>
+        <h1 id="info"></h1>
+        <hr>
+        <div class="columns">
+            <div class="column is-one-third">
+                <div id="price_chart1" class="chart"></div>
+                <div id="krw_price" align="center"></div>
+            </div>
+            <div class="column is-one-third">
+                <div id="price_chart2" class="chart"></div>
+                <div id="sdr_price" align="center"></div>
+            </div>
+            <div class="column is-one-third">
+                <div id="price_chart3" class="chart"></div>
+                <div id="usd_price" align="center"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Plotly.js -->
+<script src="https://cdn.plot.ly/plotly-basic-1.47.4.js"></script>
+<!-- import Pusher-js library -->
+<script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+<script type="text/javascript">
+    console.log('start loading...');
+    const layout = {width: 500, height: 500, legend: {"orientation": "h"}, xaxis:{fixedrange:true}, yaxis:{fixedrange:true}};
+    document.getElementById("krw_price").innerHTML = "loading..."
+    document.getElementById("sdr_price").innerHTML = "loading..."
+    document.getElementById("usd_price").innerHTML = "loading..."
+    var data = {{ data|safe}};
+    var current_data = {{ current_data|safe}};
+    console.log("beginning data-update.");
+    Plotly.newPlot('price_chart1', JSON.parse(data.graph1),layout, {displayModeBar: false});
+    Plotly.newPlot('price_chart2', JSON.parse(data.graph2),layout, {displayModeBar: false});
+    Plotly.newPlot('price_chart3', JSON.parse(data.graph3),layout, {displayModeBar: false});
+    document.getElementById("info").innerHTML = "Block Height : <font color='blue'>" + current_data.current_info.block_height + "</font><br>Block Time : <font color='blue'>" + current_data.current_info.block_time.substring(0,19) + "</font>";
+    document.getElementById("krw_price").innerHTML = "<font size='4'>LUNA/KRW : " + current_data.current_rate.ukrw.swap_price +
+                                                     " | " + current_data.current_rate.ukrw.market_price + " (<font color='blue'>" + ((current_data.current_rate.ukrw.swap_price/current_data.current_rate.ukrw.market_price-1)*100).toFixed(2) + "%)</font>";
+    document.getElementById("sdr_price").innerHTML = "<font size='4'>LUNA/SDR : " + current_data.current_rate.usdr.swap_price.toFixed(4) +
+                                                     " | " + current_data.current_rate.usdr.market_price.toFixed(4) + " (<font color='blue'>" + ((current_data.current_rate.usdr.swap_price/current_data.current_rate.usdr.market_price-1)*100).toFixed(2) + "%)</font>";
+    document.getElementById("usd_price").innerHTML = "<font size='4'>LUNA/USD : " + current_data.current_rate.uusd.swap_price.toFixed(4) +
+                                                     " | " + current_data.current_rate.uusd.market_price.toFixed(4) + " (<font color='blue'>" + ((current_data.current_rate.uusd.swap_price/current_data.current_rate.uusd.market_price-1)*100).toFixed(2) + "%)</font>";
+    console.log("data-update complete.");
+    console.log(current_data.current_info);
+    console.log('plotly complete.');
+</script>
+
+</body>
+</html>
