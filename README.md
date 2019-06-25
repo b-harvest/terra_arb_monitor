@@ -1,5 +1,5 @@
 # terra_arb_monitor
-web monitoring tool for terra blockchain arbitrage opportunity
+Web monitoring tool for terra blockchain arbitrage opportunity. It should be running on a server with terrad running.
 
 # must-install
 - python3
