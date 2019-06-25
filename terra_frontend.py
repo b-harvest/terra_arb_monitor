@@ -15,8 +15,7 @@ r = redis.Redis(host='localhost', port=6379, db=0)
 
 # parameters
 currencies = ["ukrw","usdr","uusd"]
-tx_data_length = 100000
-max_data = 600
+max_data = 600 # automatically delete historical data passing more than max_data minutes
 
 last_update_height = 0
 
